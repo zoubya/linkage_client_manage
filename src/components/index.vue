@@ -1,9 +1,6 @@
 <template>
- <div id="retroclockbox1" calss="index-class">
- </div>
-
+ <div id="retroclockbox1"></div>
 </template>
-
 
 <script>
 import $ from 'jquery'
@@ -28,10 +25,6 @@ $(function(){
 
 <style>
  @import '../assets/flipcountdown/jquery.flipcountdown.css';
- .index-class{
-    text-align: center;
-  }
-
 </style>
 
 

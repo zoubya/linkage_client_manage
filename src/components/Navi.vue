@@ -1,20 +1,19 @@
 <template>
-<div style="height:100%">
+
   <el-menu 
-    class="el-menu-vertical-demo"
-    default-active="1" 
-    active-text-color="#ffd04b"
-    background-color="#252729"
-    text-color="white"
-    @select="handleSelect"
-    :collapse="isCollapseValue"
+     mode="vertical"
+     class="el-menu-vertical-demo"
+     text-color="white"
+     background-color="#252729"
+     @select="handleSelect"
+     :collapse="isCollapseValue"
     >
     <el-submenu index="1">
       <template slot="title">
           <i class="el-icon-menu"></i>
-          <span>导航一</p></span>
+          <span>导航一  &#12288; &#12288; &#12288; &#12288; &#12288; </span>
       </template>
-      <el-menu-item-group  >
+      <el-menu-item-group>
           <el-menu-item index="1-1">人员</el-menu-item>
           <el-menu-item index="1-2">商品</el-menu-item>
           <el-menu-item index="1-3">选择3</el-menu-item>
@@ -33,7 +32,7 @@
       </el-menu-item-group>
     </el-submenu>
   </el-menu >
-</div>
+
 </template>
 
 <script>
@@ -51,22 +50,38 @@
    handleSelect(key, keyPath){
     switch(key){
       case '1-1':
-        this.$router.push('/');
+        this.$router.push('/User');
         this.breadcrumbItems  = ['导航一']
         break;
      case '1-2':
-        this.$router.push('/Navi');
+        this.$router.push('/index');
         this.breadcrumbItems  = ['导航二']
         break;
     }
    },
+
  },
 }
 </script>
 
 <style>
 .el-menu-vertical-demo{
-    min-height:100vh;
+   height: 100%;
 }
-   
+/* 鼠标悬浮时，子菜单的样式： */
+.el-menu-item:hover{
+    outline: 0 !important;
+    color: #409EFF !important;
+}
+.el-menu-item.is-active {
+    color: #fff !important;
+    background: #409EFF !important;
+}
+/* 鼠标悬浮时，主菜单的样式 */
+.el-submenu__title:focus, .el-submenu__title:hover{
+    outline: 0 !important;
+    color: #409EFF !important;
+    background: none !important;
+}
+  
 </style>
