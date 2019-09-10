@@ -64,20 +64,16 @@ export default {
     padding: 0;
     min-height: 100vh;
     background: lightgrey;
+    /* overflow-y: hidden; */
   }
   .app-header-class{ 
     padding: 0px;
     background:#252729;  
   }
-  .el-main-div-class{
-    /*flex 布局*/
-     display: flex;
-     /*实现垂直居中*/
-     align-items: center;
-     /*实现水平居中*/
-     justify-content: center;
+  .el-main-div-class{  
      width: 100%;
      height: 100%;
+     /* background:white; */
   }
  
 

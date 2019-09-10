@@ -54,7 +54,7 @@
         this.breadcrumbItems  = ['导航一']
         break;
      case '1-2':
-        this.$router.push('/index');
+        this.$router.push('/test');
         this.breadcrumbItems  = ['导航二']
         break;
     }

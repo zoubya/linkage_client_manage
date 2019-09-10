@@ -1,17 +1,19 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+
 import Navi from '@/components/Navi'
 import Head from '@/components/Head'
+import Home from '@/components/Home'
+import test from '@/components/test'
 import User from '@/components/user/User'
-import Index from '@/components/Index'
 
 Vue.use(Router)
 export default new Router({
   routes: [
     {
       path: '/',
-      name: 'Index',
-      component: Index
+      name: 'Home',
+      component: Home
     },
     {
       path: '/Navi',
@@ -22,6 +24,11 @@ export default new Router({
       path: '/Head',
       name: 'Head',
       component: Head
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: test
     },
     {
       path: '/User',
