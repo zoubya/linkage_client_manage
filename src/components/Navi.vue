@@ -50,7 +50,7 @@
    handleSelect(key, keyPath){
     switch(key){
       case '1-1':
-        this.$router.push('/User');
+        this.$router.push('/UserList');
         this.breadcrumbItems  = ['导航一']
         break;
      case '1-2':

@@ -31,7 +31,7 @@
 <script>
 import Navi from '@/components/Navi'
 import Head from '@/components/Head'
-import User from '@/components/user/User'
+import UserList from '@/components/user/UserList'
 export default {
   name: 'App',
   data() {
@@ -42,7 +42,7 @@ export default {
   components: {
               Navi,
               Head,
-              User
+              UserList
    },
   methods: {
             collapseStatus(msg){                   

@@ -1,79 +1,88 @@
 <template>
 <div>
+  <!-- 用户搜索 -->
   <el-card>
     <el-form ref="form" label-width="80px"> 
-      <el-col :span="6">
+      <el-col :span="5">
         <el-form-item label="用户名" >     
-          <el-input   type="text" size="medium" placeholder="请输入用户名"></el-input>   
+          <el-input v-model="form.username"  size="medium" placeholder="请输入用户名"></el-input>   
         </el-form-item>  
       </el-col> 
-        <el-col :span="6">
-        <el-form-item label="用户名" >     
-          <el-input   size="medium" placeholder="请输入用户名"></el-input>   
+      <el-col :span="5">
+        <el-form-item label="姓名" >     
+          <el-input v-model="form.name"  size="medium" placeholder="请输入姓名"></el-input>   
         </el-form-item>  
       </el-col> 
-   </el-form>
+      <el-col :span="1" >
+        <el-form-item>     
+         <el-button type="primary" size="medium" @click="list">查询</el-button>  
+        </el-form-item>  
+      </el-col> 
+    </el-form>
   </el-card>
 
-  <div class="user-class">
-     
-      <h3 class="module-title-class">员工信息</h3>
-      <el-button type="primary" size="medium"  style="float:right" >添加</el-button>
-    
-      <el-table  
-        border
-        class="user-table-class"
-        :data="tableData"
-        >
-        <el-table-column
-          prop="date"
-          label="日期"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="name"
-          label="姓名"
-          width="180">
-        </el-table-column>
-        <el-table-column
-          prop="address"
-          label="地址">
-        </el-table-column>
-      </el-table>
- 
+  <div class="user-div-class">  
+    <h3 class="module-title-class">用户信息</h3>
+    <el-button type="primary" size="small"  style="float:right;">新增</el-button>  
+   <!-- 用户表 -->
+    <el-table  border :data="tableData" >    
+      <el-table-column  type="index"    label=" "      width="60px" />
+      <el-table-column  prop="userid"   label="用户ID"  />
+      <el-table-column  prop="username" label="用户名"/>
+      <el-table-column  prop="name"     label="姓名"/>
+      <el-table-column  prop="status"   label="状态">
+       <template slot-scope="scope">
+         <div v-if="scope.row.status=='0'">已禁用</div>
+         <div v-else>正常</div>
+       </template>
+      </el-table-column>
+      <el-table-column  prop="itime"    label="日期" sortable/>
+      <el-table-column  label="操作">
+        <template slot-scope="scope">
+          <el-button  size="small" @click="info(scope.row.userid)">编辑</el-button>
+          <el-button type="warning" size="small"  v-if="scope.row.status=='1'" @click="update(scope.row.userid,0)">禁用</el-button>
+          <el-button type="success" size="small"  v-if="scope.row.status=='0'" @click="update(scope.row.userid,1)">启用</el-button>
+          <el-button type="danger"  size="small" @click="del(scope.row.userid)">删除</el-button>
+         </template>
+      </el-table-column>
+    </el-table>
   </div>
+
 </div>
 </template>
 
 
 <script>
+import User from '../../api/User'
 export default {
-    data() {
-        return {
-          tableData: [{
-            date: '2016-05-02',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1518 弄'
-          }, {
-            date: '2016-05-04',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1517 弄'
-          }, {
-            date: '2016-05-01',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1519 弄'
-          }, {
-            date: '2016-05-03',
-            name: '王小虎',
-            address: '上海市普陀区金沙江路 1516 弄'
-          }]
-        }
-      }
+  data() {
+    return {
+      form: {
+        username:'',
+        name:'',
+      },
+      tableData: []
+    }
+  },
+  mounted(){
+    this.list()
+  },
+  methods:{
+    list(){
+      User.list(this.form).then(response=>{
+        this.tableData = response.data.data;
+        console.info(this.tableData);
+      }).catch(err=>{
+
+      })
+    },
+   
+  },
 }
 </script>
 
 <style>
-.user-class{
+.user-div-class{
    border-radius: 4px;
    margin-top: 10px;
    /* min-height: 67.8vh; */
@@ -82,12 +91,7 @@ export default {
 }
 .module-title-class{
   float: left;
-  margin: 0;
-  
-}
-.user-table-class{
-  margin-top: 10px;
+  margin-top: 0px;  
 }
 
- 
 </style>

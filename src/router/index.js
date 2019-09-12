@@ -5,7 +5,7 @@ import Navi from '@/components/Navi'
 import Head from '@/components/Head'
 import Home from '@/components/Home'
 import test from '@/components/test'
-import User from '@/components/user/User'
+import UserList from '@/components/user/UserList'
 
 Vue.use(Router)
 export default new Router({
@@ -31,9 +31,9 @@ export default new Router({
       component: test
     },
     {
-      path: '/User',
-      name: 'User',
-      component: User
+      path: '/UserList',
+      name: 'UserList',
+      component: UserList
     },
   ]
 })
