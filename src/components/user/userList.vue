@@ -1,16 +1,16 @@
 <template>
 <div>
-  <!-- 用户搜索 -->
+<!-- 用户搜索 -->
   <el-card>
-    <el-form ref="form" label-width="80px"> 
+    <el-form  label-width="80px"> 
       <el-col :span="5">
         <el-form-item label="用户名" >     
-          <el-input v-model="form.username"  size="medium" placeholder="请输入用户名"></el-input>   
+          <el-input v-model="search.username"  size="medium" placeholder="请输入用户名"></el-input>   
         </el-form-item>  
       </el-col> 
       <el-col :span="5">
         <el-form-item label="姓名" >     
-          <el-input v-model="form.name"  size="medium" placeholder="请输入姓名"></el-input>   
+          <el-input v-model="search.name"  size="medium" placeholder="请输入姓名"></el-input>   
         </el-form-item>  
       </el-col> 
       <el-col :span="1" >
@@ -21,25 +21,26 @@
     </el-form>
   </el-card>
 
-  <div class="user-div-class">  
+<!-- 用户表 -->
+  <div class="user-div-class">
     <h3 class="module-title-class">用户信息</h3>
-    <el-button type="primary" size="small"  style="float:right;">新增</el-button>  
-   <!-- 用户表 -->
-    <el-table  border :data="tableData" >    
+    <el-button type="primary" size="small"  style="float:right;" @click="tryModel=true">新增</el-button>  
+    <el-table  border :data="tableData" >     
       <el-table-column  type="index"    label=" "      width="60px" />
-      <el-table-column  prop="userid"   label="用户ID"  />
+      <el-table-column  prop="userid"   label="用户ID" width="200px" />
       <el-table-column  prop="username" label="用户名"/>
-      <el-table-column  prop="name"     label="姓名"/>
-      <el-table-column  prop="status"   label="状态">
+      <el-table-column  prop="name"     label="姓名" />
+      <el-table-column  prop="phone"    label="电话" />
+      <el-table-column  prop="status"   label="状态" width="200px">
        <template slot-scope="scope">
          <div v-if="scope.row.status=='0'">已禁用</div>
          <div v-else>正常</div>
        </template>
       </el-table-column>
-      <el-table-column  prop="itime"    label="日期" sortable/>
+      <el-table-column  prop="itime"    label="日期" sortable width="200px"/>
       <el-table-column  label="操作">
         <template slot-scope="scope">
-          <el-button  size="small" @click="info(scope.row.userid)">编辑</el-button>
+          <el-button type="info"    size="small" @click="info(scope.row.userid)">编辑</el-button>
           <el-button type="warning" size="small"  v-if="scope.row.status=='1'" @click="update(scope.row.userid,0)">禁用</el-button>
           <el-button type="success" size="small"  v-if="scope.row.status=='0'" @click="update(scope.row.userid,1)">启用</el-button>
           <el-button type="danger"  size="small" @click="del(scope.row.userid)">删除</el-button>
@@ -47,6 +48,38 @@
       </el-table-column>
     </el-table>
   </div>
+
+<!-- 新增用户 -->
+
+  <el-dialog  title= "新增用户"  :visible.sync="tryModel">
+      <el-form  :model="form"  ref="form" label-width="80px">
+        <el-form-item label="用户名" prop="username">
+            <el-col :span="10">
+                <el-input  v-model="form.username"  placeholder="请输入用户名"></el-input>
+            </el-col>
+        </el-form-item>
+        <el-form-item label="密码" prop="password">
+          <el-col :span="10">
+              <el-input  v-model="form.password"  show-password></el-input>
+          </el-col>
+      </el-form-item>
+      <el-form-item label="姓名" prop="name">
+            <el-col :span="10">
+              <el-input  v-model="form.name" ></el-input>
+            </el-col>
+      </el-form-item>
+      <el-form-item label="电话"  prop="phone">
+            <el-col :span="10">
+              <el-input  v-model="form.phone"></el-input>
+            </el-col>
+      </el-form-item>
+    </el-form>
+    <div slot="footer" class="dialog-footer">
+      <el-button @click="resetForm('form')" >重 置</el-button>
+      <el-button type="primary" @click="add" >确 定</el-button>
+      <!-- <el-button type="primary" @click="edit" v-if="toedit==true">确 定</el-button> -->
+    </div>
+  </el-dialog>
 
 </div>
 </template>
@@ -57,10 +90,17 @@ import User from '../../api/User'
 export default {
   data() {
     return {
+      search:{
+        username:'',
+        password:'',
+      },
       form: {
         username:'',
+        password:'',
         name:'',
+        iphone:'',
       },
+      tryModel:false,
       tableData: []
     }
   },
@@ -68,14 +108,40 @@ export default {
     this.list()
   },
   methods:{
-    list(){
-      User.list(this.form).then(response=>{
-        this.tableData = response.data.data;
-        console.info(this.tableData);
-      }).catch(err=>{
+      resetForm(formName) {         
+              this.$refs[formName].resetFields();
+            },
+      list(){
+        User.list(this.search).then(response=>{
+          this.tableData = response.data.data;
+          console.info(this.tableData);
+        }).catch(err=>{
 
-      })
-    },
+        })
+      },
+      add(){
+        User.add(this.form).then(response=>{
+          this.$message({
+                    message:response.data.msg,
+                    type:"success"
+                  })
+          this.tryModel=false;//销毁模态框
+          this.list();//刷新页面
+        }).catch(err=>{
+
+        })
+      },
+      del(userid){
+        User.del(userid).then(response=>{
+          this.$message({
+                    message:response.data.msg,
+                    type:"success"
+                  })
+          this.list();//刷新页面
+        }).catch(err=>{
+
+        })
+      },
    
   },
 }
@@ -85,7 +151,6 @@ export default {
 .user-div-class{
    border-radius: 4px;
    margin-top: 10px;
-   /* min-height: 67.8vh; */
    background:#fff;
    padding:25px 20px;
 }
@@ -93,5 +158,4 @@ export default {
   float: left;
   margin-top: 0px;  
 }
-
 </style>

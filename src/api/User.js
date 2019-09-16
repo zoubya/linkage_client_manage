@@ -3,7 +3,6 @@ import qs from 'querystring'
 
 export default {
   list(data){ 
-    console.info(data)
       return axios.get('user/userList',{
         params:{
           username: data.username,
@@ -11,5 +10,12 @@ export default {
         }
       })
   },
+  add(data){
+    return axios.post('user/addUser',qs.stringify(data));
+  },
+  del(userid){
+    return axios.post('user/delUser',qs.stringify(userid));
+
+  }
 
 }

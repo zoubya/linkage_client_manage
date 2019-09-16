@@ -16,10 +16,10 @@
             </el-aside>
 
             <!--主要区域容器-->
-              <el-main>  
-                <div class="el-main-div-class">                
-                 <router-view/>  
-                </div> 
+              <el-main>               
+                <div class="el-main-div-class">                              
+                  <router-view/>                 
+                </div>       
               </el-main>
                
         </el-container>
@@ -73,7 +73,6 @@ export default {
   .el-main-div-class{  
      width: 100%;
      height: 100%;
-     /* background:white; */
   }
  
 
