@@ -10,12 +10,27 @@ export default {
         }
       })
   },
+
   add(data){
     return axios.post('user/addUser',qs.stringify(data));
   },
-  del(userid){
-    return axios.post('user/delUser',qs.stringify(userid));
 
+  info(userid){
+    return axios.get('user/userInfo',{
+      params:{
+        userid:userid
+      }
+    });
+  },
+
+  update(data){
+    return axios.post('user/editUser',qs.stringify(data));
+  },
+  
+  del(userid){
+    return axios.post('user/delUser',qs.stringify({
+      'userid':userid
+    }))
   }
 
 }

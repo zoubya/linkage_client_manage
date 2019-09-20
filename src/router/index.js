@@ -4,12 +4,18 @@ import Router from 'vue-router'
 import Navi from '@/components/Navi'
 import Head from '@/components/Head'
 import Home from '@/components/Home'
+import Login from '@/components/Login'
 import test from '@/components/test'
 import UserList from '@/components/user/UserList'
 
 Vue.use(Router)
 export default new Router({
   routes: [
+    {
+      path: '/Login',
+      name: 'Login',
+      component: Login
+    },
     {
       path: '/',
       name: 'Home',

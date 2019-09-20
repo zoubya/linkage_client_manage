@@ -15,13 +15,12 @@
                <Navi :isCollapseValue="this.isCollapse"></Navi>
             </el-aside>
 
-            <!--主要区域容器-->
-              <el-main>               
-                <div class="el-main-div-class">                              
-                  <router-view/>                 
-                </div>       
-              </el-main>
-               
+            <!--主要区域容器-->          
+              <el-main class="main-class">                                     
+                <el-scrollbar  class="scrollbar-class">           
+                  <router-view/>
+                </el-scrollbar>                                                                                  
+              </el-main>       
         </el-container>
     </el-container>
 
@@ -31,6 +30,7 @@
 <script>
 import Navi from '@/components/Navi'
 import Head from '@/components/Head'
+import Home from '@/components/Head'
 import UserList from '@/components/user/UserList'
 export default {
   name: 'App',
@@ -42,6 +42,7 @@ export default {
   components: {
               Navi,
               Head,
+              Home,
               UserList
    },
   methods: {
@@ -63,17 +64,24 @@ export default {
     margin: 0;
     padding: 0;
     min-height: 100vh;
-    background: lightgrey;
-    /* overflow-y: hidden; */
+    background: rgb(229, 226, 226);
+    overflow: hidden;
   }
   .app-header-class{ 
     padding: 0px;
     background:#252729;  
   }
-  .el-main-div-class{  
-     width: 100%;
-     height: 100%;
+  .main-class{
+    padding: 15px;
+    height: 95vh;
+    width: 100%;
   }
- 
+  .scrollbar-class{
+    height: 100%;
+  }
+  .el-scrollbar__wrap {
+    overflow-y: scroll!important;
+    overflow-x: hidden!important;
+  }
 
 </style>

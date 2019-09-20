@@ -13,7 +13,7 @@
     <span class="head-person-class">
          <el-dropdown trigger="click">
          <span class="el-dropdown-link"  style="color:white" >
-            admin<i class="el-icon-caret-bottom el-icon--right"></i>
+            {{username}}<i class="el-icon-caret-bottom el-icon--right"></i>
          </span>
          <el-dropdown-menu slot="dropdown">
             <el-dropdown-item>个人信息</el-dropdown-item>
@@ -31,9 +31,12 @@
      return {
         collapseBtnClick: false,
         isCollapse: true,
+        username:'',
      }
    },
-   components: {},
+   mounted() {
+      this.username = sessionStorage.getItem('username')
+   },
    methods: {
         collapseStatus() {
                 this.isCollapse = !this.isCollapse;
