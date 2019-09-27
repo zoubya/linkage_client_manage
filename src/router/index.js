@@ -6,8 +6,10 @@ import Head from '@/components/Head'
 import Home from '@/components/Home'
 import Login from '@/components/Login'
 import test from '@/components/test'
-import UserList from '@/components/user/UserList'
-
+import User from '@/components/user/User'
+import Goods from '@/components/goods/Goods'
+import PurchaseRecord from '@/components/goods/PurchaseRecord'
+import Purchase from '@/components/goods/Purchase'
 Vue.use(Router)
 export default new Router({
   routes: [
@@ -32,14 +34,24 @@ export default new Router({
       component: Head
     },
     {
-      path: '/test',
-      name: 'test',
-      component: test
+      path: '/Goods',
+      name: 'Goods',
+      component: Goods
     },
     {
-      path: '/UserList',
-      name: 'UserList',
-      component: UserList
+      path: '/PurchaseRecord',
+      name: 'PurchaseRecord',
+      component: PurchaseRecord
+    },
+    {
+      path: '/Purchase',
+      name: 'Purchase',
+      component: Purchase
+    },
+    {
+      path: '/User',
+      name: 'User',
+      component: User
     },
   ]
 })

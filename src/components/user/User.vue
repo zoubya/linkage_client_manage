@@ -13,6 +13,11 @@
           <el-input v-model="search.name"  size="medium" placeholder="请输入姓名"></el-input>   
         </el-form-item>  
       </el-col> 
+       <el-col :span="5">
+        <el-form-item label="电话" >     
+          <el-input v-model="search.phone"  size="medium" placeholder="请输入电话"></el-input>   
+        </el-form-item>  
+      </el-col> 
       <el-col :span="1" >
         <el-form-item>     
          <el-button type="primary" size="medium" @click="list">查询</el-button>  
@@ -40,13 +45,27 @@
       <el-table-column  prop="itime"    label="日期" sortable width="200px"/>
       <el-table-column  label="操作">
         <template slot-scope="scope">
-          <el-button type="info"    size="small" @click="info(scope.row.userid),tryModel=true,title='编辑用户'">编辑</el-button>
+          <el-button size="small" @click="info(scope.row.userid),tryModel=true,title='编辑用户'">编辑</el-button>
           <el-button type="warning" size="small"  v-if="scope.row.status=='1'" @click="off(scope.row.userid,0)">冻结</el-button>
           <el-button type="success" size="small"  v-if="scope.row.status=='0'" @click="off(scope.row.userid,1)">启用</el-button>
           <el-button type="danger"  size="small" @click="del(scope.row.userid)">删除</el-button>
          </template>
       </el-table-column>
     </el-table>
+
+    <!-- 分页 -->
+    <div class="pagination-class">
+      <el-pagination
+        background
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :page-sizes="[10, 20, 30, 40]"
+        :page-size="this.search.pagesize"
+        :current-page="this.search.page"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="this.total">
+      </el-pagination>
+    </div>
   </div>
 
 <!-- 新增/编辑用户 -->
@@ -92,6 +111,9 @@ export default {
       search:{
         username:'',
         password:'',
+        phone:'',
+        page:1,
+        pageSize:10,
       },
       form: {
         userid:'',
@@ -104,18 +126,31 @@ export default {
       tryModel:false,
       tableData: [],
       title:'',
+      total:1,
     }
   },
   mounted(){
-    this.list()
+    this.list();   
   },
   methods:{
-      resetForm(formName) {         
-              this.$refs[formName].resetFields();
-            },
+      //重置模态框
+      resetForm(formName) {  
+        this.$refs[formName].resetFields();  
+      },
+      handleCurrentChange (val) {
+        this.search.page = val
+        this.list()
+      },
+      handleSizeChange (val) {
+        this.search.pageSize = val
+        this.list()
+      },
+
       list(){
         User.list(this.search).then(response=>{
-          this.tableData = response.data.data;
+          this.tableData.splice(0, this.tableData.length) //先清空
+          response.data.data.forEach(item => this.tableData.push(item))//赋值
+          this.total = response.data.total;
           console.info(this.tableData);
         }).catch(err=>{
 
@@ -123,12 +158,15 @@ export default {
       },
       add(){
         User.add(this.form).then(response=>{
-          this.$message({
+          if(response.data.code==100){
+            this.tryModel=false;//销毁模态框
+            this.list();//刷新页面   
+          }else{
+             this.$message({
                     message:response.data.msg,
-                    type:"success"
-                  })
-          this.tryModel=false;//销毁模态框
-          this.list();//刷新页面
+                    type:"warning"
+             })
+          }  
         }).catch(err=>{
 
         })
@@ -181,5 +219,10 @@ export default {
 .module-title-class{
   float: left;
   margin-top: 0px;  
+}
+.pagination-class{
+  text-align:center;
+  margin-top: 10px;
+
 }
 </style>

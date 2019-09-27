@@ -11,12 +11,11 @@
     <el-submenu index="1">
       <template slot="title">
           <i class="el-icon-menu"></i>
-          <span>导航一  &#12288; &#12288; &#12288; &#12288; &#12288; </span>
+          <span>人员管理  &#12288; &#12288; &#12288; &#12288; </span>
       </template>
       <el-menu-item-group>
           <el-menu-item index="1-1">人员</el-menu-item>
           <el-menu-item index="1-2">商品</el-menu-item>
-          <el-menu-item index="1-3">选择3</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
 
@@ -26,9 +25,9 @@
           <span>导航二</span>
       </template>
       <el-menu-item-group>
-          <el-menu-item index="2-1">选择1</el-menu-item>
-          <el-menu-item index="2-2">选择2</el-menu-item>
-          <el-menu-item index="2-3">选择3</el-menu-item>
+          <el-menu-item index="2-1">进货记录</el-menu-item>
+          <el-menu-item index="2-2">出货记录</el-menu-item>
+          <el-menu-item index="2-3">销售走势</el-menu-item>
       </el-menu-item-group>
     </el-submenu>
   </el-menu >
@@ -50,12 +49,20 @@
    handleSelect(key, keyPath){
     switch(key){
       case '1-1':
-        this.$router.push('/UserList');
+        this.$router.push('/User');
         this.breadcrumbItems  = ['导航一']
         break;
-     case '1-2':
-        this.$router.push('/test');
-        this.breadcrumbItems  = ['导航二']
+      case '1-2':
+        this.$router.push('/Goods');
+        this.breadcrumbItems  = ['导航一']
+        break;
+      case '1-3':
+        this.$router.push('/Goods');
+        this.breadcrumbItems  = ['导航一']
+        break;
+      case '2-1':
+        this.$router.push('/PurchaseRecord');
+        this.breadcrumbItems  = ['导航一']
         break;
     }
    },

@@ -5,7 +5,7 @@
 
 <script>
 import $ from 'jquery'
-import {flipcountdown} from '../assets/flipcountdown/jquery.flipcountdown.js'
+import {flipcountdown} from '../../static/flipcountdown/jquery.flipcountdown.js'
 export default {
    data () {
      return {
@@ -25,7 +25,7 @@ $(function(){
 
 
 <style>
- @import '../assets/flipcountdown/jquery.flipcountdown.css';
+ @import '../../static/flipcountdown/jquery.flipcountdown.css';
  .home-class{
     position: absolute;
     left:50%;

@@ -3,22 +3,17 @@ import qs from 'querystring'
 
 export default {
   list(data){ 
-      return axios.get('user/userList',{
-        params:{
-          username: data.username,
-          name: data.name
-        }
-      })
+      return axios.post('user/userList',qs.stringify(data));
   },
 
   add(data){
     return axios.post('user/addUser',qs.stringify(data));
   },
 
-  info(userid){
+  info(id){
     return axios.get('user/userInfo',{
       params:{
-        userid:userid
+        userid:id
       }
     });
   },
@@ -27,9 +22,9 @@ export default {
     return axios.post('user/editUser',qs.stringify(data));
   },
   
-  del(userid){
+  del(id){
     return axios.post('user/delUser',qs.stringify({
-      'userid':userid
+      'userid':id
     }))
   }
 
